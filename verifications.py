@@ -63,6 +63,26 @@ def calculer_rangs_graphe(graphe):
     return rangs
 
 
+def calculer_calendriers(graphe, rangs):
+    durees = [max(ligne) for ligne in graphe]
+    calendrier_plus_tot = [0] * len(graphe)
+    calendrier_plus_tard = [rangs[i] for i in range(len(graphe))]
+    marges = [0] * len(graphe)
+
+    for sommet in range(len(graphe)):
+        for voisin in range(len(graphe)):
+            if graphe[sommet][voisin] != 0:
+                if calendrier_plus_tot[voisin] < calendrier_plus_tot[sommet] + durees[sommet]:
+                    calendrier_plus_tot[voisin] = calendrier_plus_tot[sommet] + durees[sommet]
+    
+    for sommet in reversed(range(len(graphe))):
+        for voisin in range(len(graphe)):
+            if graphe[sommet][voisin] != 0:
+                if calendrier_plus_tard[sommet] > calendrier_plus_tard[voisin] - durees[sommet]:
+                    calendrier_plus_tard[sommet] = calendrier_plus_tard[voisin] - durees[sommet]
+    
+    marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(len(graphe))]
+    return calendrier_plus_tot, calendrier_plus_tard, marges
 
 
 

@@ -1,4 +1,4 @@
-def lire_contraintes(fichier='/Users/louiselavergne/Documents/ProjetGraph/contraintes.txt'):
+def lire_contraintes(fichier='/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt'):
     contraintes = []
     with open(fichier, 'r') as file:
         for line in file:
@@ -31,4 +31,4 @@ def afficher_graphe(liste_contraintes):
                 print(graphe[i][j], end="\t")
         print()
 
-
+afficher_graphe(liste_contraintes)
