@@ -1,19 +1,5 @@
-from fichier import lire_contraintes
-
-contraintes = lire_contraintes()
-
-def verifier_contraintes(contraintes):
-    nombre_taches = len(contraintes)
-    graphe = [[0] * (nombre_taches + 2) for _ in range(nombre_taches + 2)]
-    for contrainte in contraintes:
-        tache = contrainte[0]
-        duree = contrainte[1]
-        predecesseurs = contrainte[2:]
-        for predecesseur in predecesseurs:
-            graphe[predecesseur][tache] = duree
-    
-    # Vérification des circuits
-    def detecter_circuit(graphe):
+from fichier import lire_contraintes, creation_graphe
+def detecter_circuit(graphe):
         entrees = [True] * len(graphe)
         for ligne in graphe:
             for tache in range(len(ligne)):
@@ -29,25 +15,33 @@ def verifier_contraintes(contraintes):
                     points_entree.append(suivant)
         return not any(any(ligne) for ligne in graphe)
 
-    if detecter_circuit(graphe)==False:
-        print("Il y a un circuit dans le graphe.")
-        
-    
     # Vérification arcs négatifs
-    def arcs_negatifs(graphe):
+def detecter_circuit(graphe):
+        entrees = [True] * len(graphe)
+        for ligne in graphe:
+            for tache in range(len(ligne)):
+                if ligne[tache] != 0:
+                    entrees[tache] = False
+        points_entree = [i for i, val in enumerate(entrees) if val]
+        while points_entree:
+            point = points_entree.pop()
+            suivants = [i for i, val in enumerate(graphe[point]) if val != 0]
+            for suivant in suivants:
+                graphe[point][suivant] = 0
+                if all(graphe[i][suivant] == 0 for i in range(len(graphe))):
+                    points_entree.append(suivant)
+        return not any(any(ligne) for ligne in graphe)
+
+
+def arcs_negatifs(graphe):
         for ligne in graphe:
             for val in ligne:
                 if val < 0:
-                    print("Il y a un arc négatif dans le graphe.")
                     return False
         return True
     
-    if (detecter_circuit(graphe) and arcs_negatifs(graphe)):
-        print("Les propriétés sont valides.")
-        return 
 
-verifier_contraintes(contraintes)
-
+    
 def calculer_rangs_graphe(graphe):
     def recherche_en_profondeur(sommet, rang):
         rangs[sommet] = rang
@@ -83,6 +77,16 @@ def calculer_calendriers(graphe, rangs):
     
     marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(len(graphe))]
     return calendrier_plus_tot, calendrier_plus_tard, marges
+
+def calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard):
+    chemins_critiques = []
+    for sommet in range(len(graphe)):
+        for voisin in range(len(graphe)):
+            if graphe[sommet][voisin] != 0:
+                if calendrier_plus_tard[sommet] == calendrier_plus_tot[sommet] and calendrier_plus_tot[sommet] + graphe[sommet][voisin] == calendrier_plus_tot[voisin]:
+                    chemins_critiques.append((sommet, voisin))
+    return chemins_critiques
+
 
 
 

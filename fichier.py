@@ -1,12 +1,21 @@
-def lire_contraintes(fichier='/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt'):
+def lire_contraintes(fichier):
     contraintes = []
     with open(fichier, 'r') as file:
         for line in file:
             contraintes.append(list(map(int, line.strip().split())))
     return contraintes
 
-liste_contraintes = lire_contraintes()
-print(liste_contraintes)
+def creation_graphe(contraintes):
+    nombre_taches = len(contraintes)
+    graphe = [[0] * (nombre_taches + 2) for _ in range(nombre_taches + 2)]
+    for contrainte in contraintes:
+        tache = contrainte[0]
+        duree = contrainte[1]
+        predecesseurs = contrainte[2:]
+        for predecesseur in predecesseurs:
+            graphe[predecesseur][tache] = duree
+    return graphe
+
 
 def afficher_graphe(liste_contraintes):
     nombre_taches = len(liste_contraintes)
@@ -31,4 +40,4 @@ def afficher_graphe(liste_contraintes):
                 print(graphe[i][j], end="\t")
         print()
 
-afficher_graphe(liste_contraintes)
+
