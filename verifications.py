@@ -21,12 +21,6 @@ def detecter_circuit(graphe):
     return not any(any(ligne) for ligne in graphe_copie)
 
 
-contraintes=lire_contraintes("/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt"
-        )
-graphe= creation_graphe(contraintes)
-detecter_circuit(graphe)
-print(graphe)
-
 def arcs_negatifs(graphe):
         for ligne in graphe:
             for val in ligne:
@@ -70,17 +64,14 @@ def calculer_calendriers(graphe, rangs):
     marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(len(graphe))]
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
-
-
-def calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard):
+def calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard, marges):
     chemins_critiques = []
     for sommet in range(len(graphe)):
         for voisin in range(len(graphe)):
             if graphe[sommet][voisin] != 0:
-                if calendrier_plus_tard[sommet] == calendrier_plus_tot[sommet] and calendrier_plus_tot[sommet] + graphe[sommet][voisin] == calendrier_plus_tot[voisin]:
+                if calendrier_plus_tard[sommet] == calendrier_plus_tot[sommet] or marges[sommet]==0 :
                     chemins_critiques.append((sommet, voisin))
     return chemins_critiques
-
 
 
 

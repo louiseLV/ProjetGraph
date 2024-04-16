@@ -38,7 +38,7 @@ def main():
         print("Marges :", marges)
         
         # Calcul des chemins critiques et affichage
-        chemins_critiques = calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard)
+        chemins_critiques = calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard, marges)
         print("Chemins critiques :", chemins_critiques)
         
         menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
