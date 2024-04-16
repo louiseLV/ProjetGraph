@@ -14,9 +14,10 @@ def main():
         
         # Création de la matrice correspondant au graphe représentant ce tableau de contraintes et affichage
         graphe = creation_graphe(contraintes)
-        afficher_graphe(contraintes)
+        afficher_graphe(graphe)
         
-        # Vérification des propriétés nécessaires pour que ce graphe soit un graphe d'ordonnancement
+       
+        #Vérification des propriétés nécessaires pour que ce graphe soit un graphe d'ordonnancement
         if not detecter_circuit(graphe):
             print("Il y a un circuit dans le graphe.")
             menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"

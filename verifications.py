@@ -1,37 +1,31 @@
-from fichier import lire_contraintes, creation_graphe
-def detecter_circuit(graphe):
-        entrees = [True] * len(graphe)
-        for ligne in graphe:
-            for tache in range(len(ligne)):
-                if ligne[tache] != 0:
-                    entrees[tache] = False
-        points_entree = [i for i, val in enumerate(entrees) if val]
-        while points_entree:
-            point = points_entree.pop()
-            suivants = [i for i, val in enumerate(graphe[point]) if val != 0]
-            for suivant in suivants:
-                graphe[point][suivant] = 0
-                if all(graphe[i][suivant] == 0 for i in range(len(graphe))):
-                    points_entree.append(suivant)
-        return not any(any(ligne) for ligne in graphe)
-
+from fichier import lire_contraintes, creation_graphe, afficher_graphe
     # Vérification arcs négatifs
 def detecter_circuit(graphe):
-        entrees = [True] * len(graphe)
-        for ligne in graphe:
-            for tache in range(len(ligne)):
-                if ligne[tache] != 0:
-                    entrees[tache] = False
-        points_entree = [i for i, val in enumerate(entrees) if val]
-        while points_entree:
-            point = points_entree.pop()
-            suivants = [i for i, val in enumerate(graphe[point]) if val != 0]
-            for suivant in suivants:
-                graphe[point][suivant] = 0
-                if all(graphe[i][suivant] == 0 for i in range(len(graphe))):
-                    points_entree.append(suivant)
-        return not any(any(ligne) for ligne in graphe)
+    graphe_copie = [ligne[:] for ligne in graphe]
+    
+    entrees = [True] * len(graphe_copie)
+    for ligne in graphe_copie:
+        for tache in range(len(ligne)):
+            if ligne[tache] != 0:
+                entrees[tache] = False
+    points_entree = [i for i, val in enumerate(entrees) if val]
+    
+    while points_entree:
+        point = points_entree.pop()
+        suivants = [i for i, val in enumerate(graphe_copie[point]) if val != 0]
+        for suivant in suivants:
+            graphe_copie[point][suivant] = 0
+            if all(graphe_copie[i][suivant] == 0 for i in range(len(graphe_copie))):
+                points_entree.append(suivant)
+    
+    return not any(any(ligne) for ligne in graphe_copie)
 
+
+contraintes=lire_contraintes("/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt"
+        )
+graphe= creation_graphe(contraintes)
+detecter_circuit(graphe)
+print(graphe)
 
 def arcs_negatifs(graphe):
         for ligne in graphe:
@@ -39,8 +33,6 @@ def arcs_negatifs(graphe):
                 if val < 0:
                     return False
         return True
-    
-
     
 def calculer_rangs_graphe(graphe):
     def recherche_en_profondeur(sommet, rang):
@@ -77,6 +69,8 @@ def calculer_calendriers(graphe, rangs):
     
     marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(len(graphe))]
     return calendrier_plus_tot, calendrier_plus_tard, marges
+
+
 
 def calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard):
     chemins_critiques = []
