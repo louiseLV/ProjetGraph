@@ -109,7 +109,7 @@ def calculer_calendriers(graphe,contraintes, rangs):
     for sommet in sommets_tries:
         max_calendrier_precedent = 0
         for voisin in range(nombre_taches):
-            if graphe[voisin][sommet] != 0:
+            if graphe[voisin][sommet] != -999:
                 max_calendrier_precedent = max(max_calendrier_precedent, calendrier_plus_tot[voisin] + durees[voisin])  
         calendrier_plus_tot[sommet] = max_calendrier_precedent
     # Initialisation du calendrier au plus tard avec le calendrier au plus tôt du dernier sommet
