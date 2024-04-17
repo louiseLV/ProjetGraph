@@ -123,7 +123,7 @@ def calculer_calendriers(graphe,contraintes, rangs):
         min_calendrier_suivant = calendrier_plus_tard[-1]
         
         for voisin in range(nombre_taches):
-            if graphe[sommet][voisin] != 0:
+            if graphe[sommet][voisin] != -1:
                 min_calendrier_suivant = min(min_calendrier_suivant, calendrier_plus_tard[voisin] - durees[sommet])
         calendrier_plus_tard[sommet] = min_calendrier_suivant
         calendrier_plus_tard[0]=0
@@ -134,10 +134,10 @@ def calculer_calendriers(graphe,contraintes, rangs):
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
 #pour faire les tests (ça sert pas à grand chose)
-contraintes = lire_contraintes("contraintes.txt")
-graphe = creation_graphe(contraintes)
-rangs = calculer_rangs_graphe(graphe)
-calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, contraintes, rangs)
+# contraintes = lire_contraintes("contraintes.txt")
+# graphe = creation_graphe(contraintes)
+# rangs = calculer_rangs_graphe(graphe)
+# calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, contraintes, rangs)
 
 def calculer_chemins_critiques(graphe, marges):
     chemins_critiques = []
