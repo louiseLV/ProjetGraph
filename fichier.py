@@ -44,3 +44,20 @@ def afficher_graphe(graphe):
                 print(graphe[i][j], end="\t")
         print()
 
+
+def afficherGraphSousLaFormeDeTriplet(graphe):
+    NombreDarc=0
+    ListOfArcs=[]
+    print("* Création du graphe d'ordonnancement :")
+#Afficher le nombre de sommet 
+    print("Nombre de sommet :", len(graphe))
+#Afficher le nombre d'arc
+    for i in range(len(graphe)):
+        for j in range(len(graphe[0])):
+            if graphe[i][j]!= 0:
+                NombreDarc+=1
+                newArc=str(i)+" -> "+str(j)+" = "+str(graphe[i][j])
+                ListOfArcs.append(newArc)
+    print("Nombre d'arc :",NombreDarc)
+    for arc in ListOfArcs:
+        print(arc)

@@ -1,4 +1,4 @@
-from fichier import lire_contraintes, afficher_graphe, creation_graphe
+from fichier import lire_contraintes, afficher_graphe, creation_graphe, afficherGraphSousLaFormeDeTriplet
 from verifications import detecter_circuit, arcs_negatifs, calculer_rangs_graphe, calculer_calendriers, calculer_chemins_critiques
 
 
@@ -7,13 +7,15 @@ def main():
     
     while menue:
         # Choix du tableau de contraintes à traiter
-        fichier = "/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt"
+        fichier = "contraintes.txt"
         
         # Lecture du tableau de contraintes sur fichier et stockage en mémoire
         contraintes = lire_contraintes(fichier)
         
         # Création de la matrice correspondant au graphe représentant ce tableau de contraintes et affichage
         graphe = creation_graphe(contraintes)
+        
+        afficherGraphSousLaFormeDeTriplet(graphe)
         afficher_graphe(graphe)
         
        

@@ -1,25 +1,72 @@
 from fichier import lire_contraintes, creation_graphe, afficher_graphe
     # Vérification arcs négatifs
 
+# def detecter_circuit(graphe):
+#     graphe_copie = [ligne[:] for ligne in graphe]
+    
+#     entrees = [True] * len(graphe_copie)
+#     for ligne in graphe_copie:
+#         for tache in range(len(ligne)):
+#             if ligne[tache] != 0:
+#                 entrees[tache] = False
+#     points_entree = [i for i, val in enumerate(entrees) if val]
+    
+#     while points_entree:
+#         point = points_entree.pop()
+#         suivants = [i for i, val in enumerate(graphe_copie[point]) if val != 0]
+#         for suivant in suivants:
+#             graphe_copie[point][suivant] = 0
+#             if all(graphe_copie[i][suivant] == 0 for i in range(len(graphe_copie))):
+#                 points_entree.append(suivant)
+    
+#     return not any(any(ligne) for ligne in graphe_copie)
+
+
 def detecter_circuit(graphe):
+    print(graphe)
+    print("Il y a un seul point d'entrée :", [i for i, ligne in enumerate(graphe) if all(val == 0 for val in ligne)])
+    print("Détection de circuit (Méthode de suppression des points d'entrée) :")
+    
+    # Création d'une copie du graphe
     graphe_copie = [ligne[:] for ligne in graphe]
     
-    entrees = [True] * len(graphe_copie)
+    # Recherche des points d'entrée
+    points_entree = [True] * len(graphe_copie)
     for ligne in graphe_copie:
         for tache in range(len(ligne)):
             if ligne[tache] != 0:
-                entrees[tache] = False
-    points_entree = [i for i, val in enumerate(entrees) if val]
+                points_entree[tache] = False
     
-    while points_entree:
-        point = points_entree.pop()
+    print("* Points d'entrée :", [i for i, est_entree in enumerate(points_entree) if est_entree])
+    
+    # Liste pour stocker les sommets à traiter
+    sommets_a_traiter = [i for i, est_entree in enumerate(points_entree) if est_entree]
+    
+    # Méthode d'élimination des points d'entrée
+    while sommets_a_traiter:
+        point = sommets_a_traiter.pop()
         suivants = [i for i, val in enumerate(graphe_copie[point]) if val != 0]
         for suivant in suivants:
             graphe_copie[point][suivant] = 0
+            # Si le sommet suivant n'a plus de prédécesseur
             if all(graphe_copie[i][suivant] == 0 for i in range(len(graphe_copie))):
-                points_entree.append(suivant)
+                sommets_a_traiter.append(suivant)
+        
+        print("* Suppression des points d'entrée")
+        print("Sommets restants :", [i for i in range(len(graphe_copie)) if any(graphe_copie[i])])
+        print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == 0 for j in range(len(graphe_copie)))])
     
-    return not any(any(ligne) for ligne in graphe_copie)
+    # Vérification s'il reste des arcs dans le graphe
+    pas_de_circuit = not any(any(ligne) for ligne in graphe_copie)
+    if pas_de_circuit:
+        print("-> Il n'y a pas de circuit")
+    else:
+        print("-> Il y a un circuit")
+    
+    print("Il n'y a pas d'arcs négatifs")
+    print("-> C'est un graphe d'ordonnancement")
+    
+    return pas_de_circuit
 
 
 def arcs_negatifs(graphe):
@@ -88,7 +135,7 @@ def calculer_calendriers(graphe,contraintes, rangs):
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
 #pour faire les tests (ça sert pas à grand chose)
-contraintes = lire_contraintes("/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt")
+contraintes = lire_contraintes("contraintes.txt")
 graphe = creation_graphe(contraintes)
 rangs = calculer_rangs_graphe(graphe)
 calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, contraintes, rangs)
