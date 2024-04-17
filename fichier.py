@@ -5,27 +5,63 @@ def lire_contraintes(fichier):
             contraintes.append(list(map(int, line.strip().split())))
     return contraintes
 
+# def creation_graphe(contraintes):
+#     nombre_taches = len(contraintes)
+#     listePredecesseurs=[]
+#     graphe = [[0] * (nombre_taches+2) for _ in range(nombre_taches+2)]
+    
+#     for contrainte in contraintes:
+#         tache = contrainte[0]
+#         predecesseurs = contrainte[2:]
+#         for element in predecesseurs:
+#             listePredecesseurs.append(element)
+#         if len(predecesseurs)==0 :
+#             graphe[0][tache]= 0
+#         for predecesseur in predecesseurs:
+#             graphe[predecesseur][tache] = predecesseur
+
+#     for contrainte in contraintes:
+#         tache=contrainte[0]
+#         if tache not in listePredecesseurs:
+#             graphe[tache][nombre_taches+1] = tache
+    
+#     return graphe
+
 def creation_graphe(contraintes):
     nombre_taches = len(contraintes)
-    listePredecesseurs=[]
-    graphe = [[0] * (nombre_taches+2) for _ in range(nombre_taches+2)]
-    
+    listePredecesseurs = []
+    graphe = [[0] * (nombre_taches + 2) for _ in range(nombre_taches + 2)]
+
+    # Création des liens depuis les tâches vers les successeurs
     for contrainte in contraintes:
         tache = contrainte[0]
         predecesseurs = contrainte[2:]
         for element in predecesseurs:
             listePredecesseurs.append(element)
-        if len(predecesseurs)==0 :
-            graphe[0][tache]= 0
+        if len(predecesseurs) == 0:
+            graphe[0][tache] = tache
         for predecesseur in predecesseurs:
             graphe[predecesseur][tache] = predecesseur
 
+    # Création des liens depuis les tâches vers le point de sortie
     for contrainte in contraintes:
-        tache=contrainte[0]
+        tache = contrainte[0]
         if tache not in listePredecesseurs:
-            graphe[tache][nombre_taches+1] = tache
-    
+            graphe[tache][nombre_taches + 1] = tache
+
+    # Relier le point d'entrée aux tâches sans prédécesseurs
+    for tache in range(1, nombre_taches + 1):
+        if all(graphe[i][tache] == 0 for i in range(nombre_taches + 2)):
+            graphe[0][tache] = tache
+
+    # Relier les tâches sans successeurs au point de sortie
+    for tache in range(1, nombre_taches + 1):
+        if all(graphe[tache][i] == 0 for i in range(nombre_taches + 2)):
+            graphe[tache][nombre_taches + 1] = tache
+
     return graphe
+
+
 
 
 

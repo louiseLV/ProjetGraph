@@ -24,7 +24,6 @@ from fichier import lire_contraintes, creation_graphe, afficher_graphe
 
 def detecter_circuit(graphe):
     print(graphe)
-    print("Il y a un seul point d'entrée :", [i for i, ligne in enumerate(graphe) if all(val == 0 for val in ligne)])
     print("Détection de circuit (Méthode de suppression des points d'entrée) :")
     
     # Création d'une copie du graphe
