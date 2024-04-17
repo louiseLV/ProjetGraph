@@ -1,5 +1,6 @@
 from fichier import lire_contraintes, creation_graphe, afficher_graphe
     # Vérification arcs négatifs
+
 def detecter_circuit(graphe):
     graphe_copie = [ligne[:] for ligne in graphe]
     
@@ -27,7 +28,7 @@ def arcs_negatifs(graphe):
                 if val < 0:
                     return False
         return True
-    
+
 def calculer_rangs_graphe(graphe):
     def recherche_en_profondeur(sommet, rang):
         rangs[sommet] = rang
@@ -43,33 +44,60 @@ def calculer_rangs_graphe(graphe):
     return rangs
 
 
-def calculer_calendriers(graphe, rangs):
-    durees = [max(ligne) for ligne in graphe]
-    calendrier_plus_tot = [0] * len(graphe)
-    calendrier_plus_tard = [rangs[i] for i in range(len(graphe))]
-    marges = [0] * len(graphe)
+def calculer_calendriers(graphe,contraintes, rangs):
+    nombre_taches = len(graphe)
+    calendrier_plus_tot = [0] * nombre_taches
+    calendrier_plus_tard = [0] * nombre_taches
+    marges = [0] * nombre_taches
+    durees= []
+    #truc moche mais à refaire mieux
+    durees.append(0)
+    for contrainte in contraintes:
+        durees.append(contrainte[1])
+    for i in range(2):
+        durees.append(0)
+    
+    
+    sommets_tries = sorted(range(nombre_taches), key=lambda sommet: rangs[sommet])
+    # Calcul des calendriers au plus tôt
+    for sommet in sommets_tries:
+        max_calendrier_precedent = 0
+        for voisin in range(nombre_taches):
+            if graphe[voisin][sommet] != 0:
+                max_calendrier_precedent = max(max_calendrier_precedent, calendrier_plus_tot[voisin] + durees[voisin])  
+        calendrier_plus_tot[sommet] = max_calendrier_precedent
+    # Initialisation du calendrier au plus tard avec le calendrier au plus tôt du dernier sommet
+    calendrier_plus_tard[-1] = calendrier_plus_tot[-1]
 
-    for sommet in range(len(graphe)):
-        for voisin in range(len(graphe)):
-            if graphe[sommet][voisin] != 0:
-                if calendrier_plus_tot[voisin] < calendrier_plus_tot[sommet] + durees[sommet]:
-                    calendrier_plus_tot[voisin] = calendrier_plus_tot[sommet] + durees[sommet]
+    #Ca calcule le bon resultat 
     
-    for sommet in reversed(range(len(graphe))):
-        for voisin in range(len(graphe)):
+    # Calcul des calendriers au plus tard
+   
+    for sommet in reversed(sommets_tries):
+        min_calendrier_suivant = calendrier_plus_tard[-1]
+        
+        for voisin in range(nombre_taches):
             if graphe[sommet][voisin] != 0:
-                if calendrier_plus_tard[sommet] > calendrier_plus_tard[voisin] - durees[sommet]:
-                    calendrier_plus_tard[sommet] = calendrier_plus_tard[voisin] - durees[sommet]
+                min_calendrier_suivant = min(min_calendrier_suivant, calendrier_plus_tard[voisin] - durees[sommet])
+        calendrier_plus_tard[sommet] = min_calendrier_suivant
+        calendrier_plus_tard[0]=0
     
-    marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(len(graphe))]
+    # Calcul des marges en soustrayant les calendriers au plus tard des calendriers au plus tôt
+    marges = [calendrier_plus_tard[i] - calendrier_plus_tot[i] for i in range(nombre_taches)]
+
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
-def calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard, marges):
+contraintes = lire_contraintes("/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt")
+graphe = creation_graphe(contraintes)
+rangs = calculer_rangs_graphe(graphe)
+calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, contraintes, rangs)
+
+def calculer_chemins_critiques(graphe, marges):
     chemins_critiques = []
     for sommet in range(len(graphe)):
         for voisin in range(len(graphe)):
             if graphe[sommet][voisin] != 0:
-                if calendrier_plus_tard[sommet] == calendrier_plus_tot[sommet] or marges[sommet]==0 :
+                if marges[sommet]==0 :
                     chemins_critiques.append((sommet, voisin))
     return chemins_critiques
 

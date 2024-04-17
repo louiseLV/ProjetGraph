@@ -26,19 +26,18 @@ def main():
             print("Il y a un arc négatif dans le graphe.")
             menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
             continue
-        
         # Calcul des rangs des sommets et affichage
         rangs = calculer_rangs_graphe(graphe)
         print("Rangs des sommets :", rangs)
         
         # Calcul des calendriers au plus tôt et au plus tard et affichage
-        calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, rangs)
+        calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe,contraintes, rangs)
         print("Calendriers au plus tôt :", calendrier_plus_tot)
         print("Calendriers au plus tard :", calendrier_plus_tard)
         print("Marges :", marges)
         
         # Calcul des chemins critiques et affichage
-        chemins_critiques = calculer_chemins_critiques(graphe, calendrier_plus_tot, calendrier_plus_tard, marges)
+        chemins_critiques = calculer_chemins_critiques(graphe, marges)
         print("Chemins critiques :", chemins_critiques)
         
         menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
