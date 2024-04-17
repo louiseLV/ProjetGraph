@@ -26,6 +26,7 @@ def main():
             print("Il y a un arc négatif dans le graphe.")
             menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
             continue
+        
         # Calcul des rangs des sommets et affichage
         rangs = calculer_rangs_graphe(graphe)
         print("Rangs des sommets :", rangs)

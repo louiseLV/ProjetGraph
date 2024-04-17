@@ -87,6 +87,7 @@ def calculer_calendriers(graphe,contraintes, rangs):
 
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
+#pour faire les tests (ça sert pas à grand chose)
 contraintes = lire_contraintes("/Users/louiselavergne/Documents/ProjetGraph1/contraintes.txt")
 graphe = creation_graphe(contraintes)
 rangs = calculer_rangs_graphe(graphe)
