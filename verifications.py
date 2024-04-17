@@ -30,7 +30,7 @@ def detecter_circuit(graphe):
     points_entree = [True] * len(graphe_copie)
     for ligne in graphe_copie:
         for tache in range(len(ligne)):
-            if ligne[tache] != -1:
+            if ligne[tache] != -999:
                 points_entree[tache] = False
     
     print("* Points d'entrée :", [i for i, est_entree in enumerate(points_entree) if est_entree])
@@ -41,21 +41,21 @@ def detecter_circuit(graphe):
     # Méthode d'élimination des points d'entrée
     while sommets_a_traiter:
         point = sommets_a_traiter.pop()
-        suivants = [i for i, val in enumerate(graphe_copie[point]) if val != -1]
+        suivants = [i for i, val in enumerate(graphe_copie[point]) if val != -999]
         for suivant in suivants:
-            graphe_copie[point][suivant] = -1
+            graphe_copie[point][suivant] = -999
             # Si le sommet suivant n'a plus de prédécesseur
-            if all(graphe_copie[i][suivant] == -1 for i in range(len(graphe_copie))):
+            if all(graphe_copie[i][suivant] == -999 for i in range(len(graphe_copie))):
                 sommets_a_traiter.append(suivant)
         
         # Mise à jour des sommets restants
-        sommets_restants = [i for i in range(len(graphe_copie)) if any(graphe_copie[i][j] != -1 for j in range(len(graphe_copie[i])))]
+        sommets_restants = [i for i in range(len(graphe_copie)) if any(graphe_copie[i][j] != -999 for j in range(len(graphe_copie[i])))]
         print("* Suppression des points d'entrée")
         print("Sommets restants :", sommets_restants)
-        print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -1 for j in range(len(graphe_copie)))])
+        print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))])
     
     # Vérification s'il reste des arcs dans le graphe
-    pas_de_circuit = not any(val != -1 for ligne in graphe_copie for val in ligne)
+    pas_de_circuit = not any(val != -999 for ligne in graphe_copie for val in ligne)
     if pas_de_circuit:
         print("-> Il n'y a pas de circuit")
     else:
@@ -71,7 +71,7 @@ def detecter_circuit(graphe):
 def arcs_negatifs(graphe):
         for ligne in graphe:
             for val in ligne:
-                if val < 0 and val != -1:
+                if val < 0 and val != -999:
                     return False
         return True
 
@@ -79,14 +79,14 @@ def calculer_rangs_graphe(graphe):
     def recherche_en_profondeur(sommet, rang):
         rangs[sommet] = rang
         for voisin in range(len(graphe)):
-            if graphe[sommet][voisin] != -1:
+            if graphe[sommet][voisin] != -999:
                 if rangs[voisin] < rang + 1:
                     recherche_en_profondeur(voisin, rang + 1)
 
     rangs = [0] * len(graphe)
     for sommet in range(len(graphe)):
-        if not any(graphe[i][sommet] != -1 for i in range(len(graphe))):
-            recherche_en_profondeur(sommet, 1)
+        if not any(graphe[i][sommet] != -999 for i in range(len(graphe))):
+            recherche_en_profondeur(sommet, 0)
     return rangs
 
 
@@ -123,7 +123,7 @@ def calculer_calendriers(graphe,contraintes, rangs):
         min_calendrier_suivant = calendrier_plus_tard[-1]
         
         for voisin in range(nombre_taches):
-            if graphe[sommet][voisin] != -1:
+            if graphe[sommet][voisin] != -999:
                 min_calendrier_suivant = min(min_calendrier_suivant, calendrier_plus_tard[voisin] - durees[sommet])
         calendrier_plus_tard[sommet] = min_calendrier_suivant
         calendrier_plus_tard[0]=0
@@ -143,8 +143,8 @@ def calculer_chemins_critiques(graphe, marges):
     chemins_critiques = []
     for sommet in range(len(graphe)):
         for voisin in range(len(graphe)):
-            if graphe[sommet][voisin] != -1:
-                if marges[sommet]==-1 :
+            if graphe[sommet][voisin] != -999:
+                if marges[sommet]==0 :
                     chemins_critiques.append((sommet, voisin))
     return chemins_critiques
 

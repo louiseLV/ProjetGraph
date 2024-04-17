@@ -30,7 +30,7 @@ def lire_contraintes(fichier):
 def creation_graphe(contraintes):
     nombre_taches = len(contraintes)
     listePredecesseurs = []
-    graphe = [[-1] * (nombre_taches + 2) for _ in range(nombre_taches + 2)]
+    graphe = [[-999] * (nombre_taches + 2) for _ in range(nombre_taches + 2)]
 
     # Création des liens depuis les tâches vers les successeurs
     for contrainte in contraintes:
@@ -75,7 +75,7 @@ def afficher_graphe(graphe):
     for i in range(len(graphe)):
         print(i, end="\t")
         for j in range(len(graphe[0])):
-            if graphe[i][j] == -1:
+            if graphe[i][j] == -999:
                 print("*", end="\t")
             else:
                 print(graphe[i][j], end="\t")
@@ -91,7 +91,7 @@ def afficherGraphSousLaFormeDeTriplet(graphe):
 #Afficher le nombre d'arc
     for i in range(len(graphe)):
         for j in range(len(graphe[0])):
-            if graphe[i][j]!= -1:
+            if graphe[i][j]!= -999:
                 NombreDarc+=1
                 newArc=str(i)+" -> "+str(j)+" = "+str(graphe[i][j])
                 ListOfArcs.append(newArc)
