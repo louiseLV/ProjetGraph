@@ -7,14 +7,19 @@ def main():
     
     while menue:
         # Choix du tableau de contraintes à traiter
-        fichier = "contraintes.txt"
+        print("Choix du tableau de contraintes à traiter :")
+        print("1-14")
+        fichier = input("Entrez le numéro du tableau de contraintes à traiter : ")
+        fichier = "Fichiers/table "+fichier+".txt"
+        #fichier = "contraintes.txt"
+
         
         # Lecture du tableau de contraintes sur fichier et stockage en mémoire
         contraintes = lire_contraintes(fichier)
         
         # Création de la matrice correspondant au graphe représentant ce tableau de contraintes et affichage
         graphe = creation_graphe(contraintes)
-        
+
         afficherGraphSousLaFormeDeTriplet(graphe)
         afficher_graphe(graphe)
         
