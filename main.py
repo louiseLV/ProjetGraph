@@ -26,28 +26,35 @@ def main():
        
         #Vérification des propriétés nécessaires pour que ce graphe soit un graphe d'ordonnancement
         if not detecter_circuit(graphe):
-            print("Il y a un circuit dans le graphe.")
             menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
             continue
+        print("")
         if not arcs_negatifs(graphe):
             print("Il y a un arc négatif dans le graphe.")
             menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
             continue
-        
+ 
+        print("")
+        print("-> c'est un graphe d'ordonnancement")
+        print("")
         # Calcul des rangs des sommets et affichage
         rangs = calculer_rangs_graphe(graphe)
         print("Rangs des sommets :", rangs)
-        
+        print("")
         # Calcul des calendriers au plus tôt et au plus tard et affichage
         calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe,contraintes, rangs)
         print("Calendriers au plus tôt :", calendrier_plus_tot)
+        print("")
         print("Calendriers au plus tard :", calendrier_plus_tard)
+        print("")
         print("Marges :", marges)
+
+        print("")
         
         # Calcul des chemins critiques et affichage
         chemins_critiques = calculer_chemins_critiques(graphe, marges)
         print("Chemins critiques :", chemins_critiques)
-        
+        print("")
         menue = input("Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) ") == "oui"
 
 if __name__ == "__main__":

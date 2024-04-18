@@ -49,6 +49,7 @@ def detecter_circuit(graphe):
         
         # Mise à jour des sommets restants
         sommets_restants = [i for i in range(len(graphe_copie)) if any(graphe_copie[i][j] != -999 for j in range(len(graphe_copie[i])))]
+        print(sommets_restants)
         # print("* Suppression des points d'entrée")
         # print("Sommets restants :", sommets_restants)
         # print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))])
@@ -61,12 +62,11 @@ def detecter_circuit(graphe):
     # Vérification s'il reste des arcs dans le graphe
     pas_de_circuit = not any(val != -999 for ligne in graphe_copie for val in ligne)
     if pas_de_circuit:
+        print("")
         print("-> Il n'y a pas de circuit")
     else:
+        print("")
         print("-> Il y a un circuit")
-    
-    print("Il n'y a pas d'arcs négatifs")
-    print("-> C'est un graphe d'ordonnancement")
     
     return pas_de_circuit
 
@@ -77,6 +77,7 @@ def arcs_negatifs(graphe):
             for val in ligne:
                 if val < 0 and val != -999:
                     return False
+        print("-> Il n'y a pas d'arcs négatifs")
         return True
 
 def calculer_rangs_graphe(graphe):
