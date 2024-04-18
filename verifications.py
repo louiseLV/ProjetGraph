@@ -37,7 +37,6 @@ def detecter_circuit(graphe):
     
     # Liste pour stocker les sommets à traiter
     sommets_a_traiter = [i for i, est_entree in enumerate(points_entree) if est_entree]
-    
     # Méthode d'élimination des points d'entrée
     while sommets_a_traiter:
         point = sommets_a_traiter.pop()
@@ -50,10 +49,15 @@ def detecter_circuit(graphe):
         
         # Mise à jour des sommets restants
         sommets_restants = [i for i in range(len(graphe_copie)) if any(graphe_copie[i][j] != -999 for j in range(len(graphe_copie[i])))]
+        # print("* Suppression des points d'entrée")
+        # print("Sommets restants :", sommets_restants)
+        # print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))])
+        points_entree = [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))]
+        points_entree_supprimes = [i for i, est_entree in enumerate(points_entree) if not est_entree]
+        points_entree = [i for i in range(len(points_entree)) if i not in points_entree_supprimes]
         print("* Suppression des points d'entrée")
         print("Sommets restants :", sommets_restants)
-        print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))])
-    
+        print("* Points d'entrée :", points_entree)
     # Vérification s'il reste des arcs dans le graphe
     pas_de_circuit = not any(val != -999 for ligne in graphe_copie for val in ligne)
     if pas_de_circuit:
