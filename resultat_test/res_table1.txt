@@ -1,0 +1,44 @@
+Choix du tableau de contraintes à traiter :
+1-14
+Entrez le numéro du tableau de contraintes à traiter : 1
+* Création du graphe d'ordonnancement :
+Nombre de sommet : 15
+Nombre d'arc : 18
+0 -> 1 = 0
+0 -> 2 = 0
+1 -> 3 = 1
+2 -> 4 = 2
+3 -> 4 = 3
+3 -> 12 = 3
+4 -> 5 = 4
+4 -> 11 = 4
+5 -> 6 = 5
+6 -> 7 = 6
+6 -> 13 = 6
+7 -> 8 = 7
+8 -> 9 = 8
+9 -> 14 = 9
+10 -> 14 = 10
+11 -> 10 = 11
+12 -> 13 = 12
+13 -> 4 = 13
+Matrice des valeurs :
+        0       1       2       3       4       5       6       7       8       9       10      11      12      13      14
+0       *       0       0       *       *       *       *       *       *       *       *       *       *       *       *
+1       *       *       *       1       *       *       *       *       *       *       *       *       *       *       *
+2       *       *       *       *       2       *       *       *       *       *       *       *       *       *       *
+3       *       *       *       *       3       *       *       *       *       *       *       *       3       *       *
+4       *       *       *       *       *       4       *       *       *       *       *       4       *       *       *
+5       *       *       *       *       *       *       5       *       *       *       *       *       *       *       *
+6       *       *       *       *       *       *       *       6       *       *       *       *       *       6       *
+7       *       *       *       *       *       *       *       *       7       *       *       *       *       *       *
+8       *       *       *       *       *       *       *       *       *       8       *       *       *       *       *
+9       *       *       *       *       *       *       *       *       *       *       *       *       *       *       9
+10      *       *       *       *       *       *       *       *       *       *       *       *       *       *       10
+11      *       *       *       *       *       *       *       *       *       *       11      *       *       *       *
+12      *       *       *       *       *       *       *       *       *       *       *       *       *       12      *
+13      *       *       *       *       13      *       *       *       *       *       *       *       *       *       *
+14      *       *       *       *       *       *       *       *       *       *       *       *       *       *       *
+
+-> Il y a un circuit
+Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) 

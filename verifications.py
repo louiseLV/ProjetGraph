@@ -1,27 +1,5 @@
 from fichier import lire_contraintes, creation_graphe, afficher_graphe
-    # Vérification arcs négatifs
-
-# def detecter_circuit(graphe):
-#     graphe_copie = [ligne[:] for ligne in graphe]
-    
-#     entrees = [True] * len(graphe_copie)
-#     for ligne in graphe_copie:
-#         for tache in range(len(ligne)):
-#             if ligne[tache] != 0:
-#                 entrees[tache] = False
-#     points_entree = [i for i, val in enumerate(entrees) if val]
-    
-#     while points_entree:
-#         point = points_entree.pop()
-#         suivants = [i for i, val in enumerate(graphe_copie[point]) if val != 0]
-#         for suivant in suivants:
-#             graphe_copie[point][suivant] = 0
-#             if all(graphe_copie[i][suivant] == 0 for i in range(len(graphe_copie))):
-#                 points_entree.append(suivant)
-    
-#     return not any(any(ligne) for ligne in graphe_copie)
 def detecter_circuit(graphe):
-    print("Détection de circuit (Méthode de suppression des points d'entrée) :")
     
     # Création d'une copie du graphe
     graphe_copie = [[val for val in ligne] for ligne in graphe]
@@ -33,7 +11,6 @@ def detecter_circuit(graphe):
             if ligne[tache] != -999:
                 points_entree[tache] = False
     
-    print("* Points d'entrée :", [i for i, est_entree in enumerate(points_entree) if est_entree])
     
     # Liste pour stocker les sommets à traiter
     sommets_a_traiter = [i for i, est_entree in enumerate(points_entree) if est_entree]
@@ -47,18 +24,6 @@ def detecter_circuit(graphe):
             if all(graphe_copie[i][suivant] == -999 for i in range(len(graphe_copie))):
                 sommets_a_traiter.append(suivant)
         
-        # Mise à jour des sommets restants
-        sommets_restants = [i for i in range(len(graphe_copie)) if any(graphe_copie[i][j] != -999 for j in range(len(graphe_copie[i])))]
-        print(sommets_restants)
-        # print("* Suppression des points d'entrée")
-        # print("Sommets restants :", sommets_restants)
-        # print("* Points d'entrée :", [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))])
-        points_entree = [i for i in range(len(graphe_copie)) if all(graphe_copie[j][i] == -999 for j in range(len(graphe_copie)))]
-        points_entree_supprimes = [i for i, est_entree in enumerate(points_entree) if not est_entree]
-        points_entree = [i for i in range(len(points_entree)) if i not in points_entree_supprimes]
-        print("* Suppression des points d'entrée")
-        print("Sommets restants :", sommets_restants)
-        print("* Points d'entrée :", points_entree)
     # Vérification s'il reste des arcs dans le graphe
     pas_de_circuit = not any(val != -999 for ligne in graphe_copie for val in ligne)
     if pas_de_circuit:
@@ -92,6 +57,9 @@ def calculer_rangs_graphe(graphe):
     for sommet in range(len(graphe)):
         if not any(graphe[i][sommet] != -999 for i in range(len(graphe))):
             recherche_en_profondeur(sommet, 0)
+        print("Rang du sommet", sommet, ":", rangs[sommet])
+
+    
     return rangs
 
 
@@ -101,7 +69,6 @@ def calculer_calendriers(graphe,contraintes, rangs):
     calendrier_plus_tard = [0] * nombre_taches
     marges = [0] * nombre_taches
     durees= []
-    #truc moche mais à refaire mieux
     durees.append(0)
     for contrainte in contraintes:
         durees.append(contrainte[1])
@@ -119,14 +86,11 @@ def calculer_calendriers(graphe,contraintes, rangs):
         calendrier_plus_tot[sommet] = max_calendrier_precedent
     # Initialisation du calendrier au plus tard avec le calendrier au plus tôt du dernier sommet
     calendrier_plus_tard[-1] = calendrier_plus_tot[-1]
-
-    #Ca calcule le bon resultat 
     
     # Calcul des calendriers au plus tard
    
     for sommet in reversed(sommets_tries):
         min_calendrier_suivant = calendrier_plus_tard[-1]
-        
         for voisin in range(nombre_taches):
             if graphe[sommet][voisin] != -999:
                 min_calendrier_suivant = min(min_calendrier_suivant, calendrier_plus_tard[voisin] - durees[sommet])
@@ -138,12 +102,6 @@ def calculer_calendriers(graphe,contraintes, rangs):
 
     return calendrier_plus_tot, calendrier_plus_tard, marges
 
-#pour faire les tests (ça sert pas à grand chose)
-# contraintes = lire_contraintes("contraintes.txt")
-# graphe = creation_graphe(contraintes)
-# rangs = calculer_rangs_graphe(graphe)
-# calendrier_plus_tot, calendrier_plus_tard, marges = calculer_calendriers(graphe, contraintes, rangs)
-
 def calculer_chemins_critiques(graphe, marges):
     chemins_critiques = []
     for sommet in range(len(graphe)):
@@ -153,5 +111,13 @@ def calculer_chemins_critiques(graphe, marges):
                     chemins_critiques.append((sommet, voisin))
     return chemins_critiques
 
-
+def calculer_sommets_critiques(graphe, marges):
+    sommets_critiques = set()
+    for sommet_depart in range(len(graphe)):
+        for sommet_arrivee in range(len(graphe)):
+            if graphe[sommet_depart][sommet_arrivee] != -999:
+                if marges[sommet_depart] == 0 and marges[sommet_arrivee] == 0:
+                    sommets_critiques.add(sommet_depart)
+                    sommets_critiques.add(sommet_arrivee)
+    return list(sommets_critiques)
 

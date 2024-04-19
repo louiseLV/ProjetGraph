@@ -1,0 +1,63 @@
+Choix du tableau de contraintes à traiter :
+1-14
+Entrez le numéro du tableau de contraintes à traiter : 11
+* Création du graphe d'ordonnancement :
+Nombre de sommet : 10
+Nombre d'arc : 16
+0 -> 1 = 0
+1 -> 2 = 1
+1 -> 4 = 1
+1 -> 5 = 1
+2 -> 3 = 2
+2 -> 8 = 2
+3 -> 7 = 3
+4 -> 2 = 4
+4 -> 6 = 4
+4 -> 8 = 4
+5 -> 4 = 5
+5 -> 6 = 5
+5 -> 7 = 5
+6 -> 8 = 6
+7 -> 8 = 7
+8 -> 9 = 8
+Matrice des valeurs :
+        0       1       2       3       4       5       6       7       8       9
+0       *       0       *       *       *       *       *       *       *       *
+1       *       *       1       *       1       1       *       *       *       *
+2       *       *       *       2       *       *       *       *       2       *
+3       *       *       *       *       *       *       *       3       *       *
+4       *       *       4       *       *       *       4       *       4       *
+5       *       *       *       *       5       *       5       5       *       *
+6       *       *       *       *       *       *       *       *       6       *
+7       *       *       *       *       *       *       *       *       7       *
+8       *       *       *       *       *       *       *       *       *       8
+9       *       *       *       *       *       *       *       *       *       *
+
+-> Il n'y a pas de circuit
+
+-> Il n'y a pas d'arcs négatifs
+
+-> c'est un graphe d'ordonnancement
+
+Rang du sommet 0 : 0
+Rang du sommet 1 : 1
+Rang du sommet 2 : 4
+Rang du sommet 3 : 5
+Rang du sommet 4 : 3
+Rang du sommet 5 : 2
+Rang du sommet 6 : 4
+Rang du sommet 7 : 6
+Rang du sommet 8 : 7
+Rang du sommet 9 : 8
+
+Calendriers au plus tôt : [0, 0, 8, 9, 6, 1, 8, 13, 16, 16]
+
+Calendriers au plus tard : [0, 0, 8, 9, 6, 1, 10, 13, 16, 16]
+
+Marges : [0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+
+Chemins critiques : [(0, 1), (1, 2), (1, 4), (1, 5), (2, 3), (2, 8), (3, 7), (4, 2), (4, 6), (4, 8), (5, 4), (5, 6), (5, 7), (7, 8), (8, 9)]
+
+Sommets des chemins critiques : [0, 1, 2, 3, 4, 5, 7, 8, 9]
+
+Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) 

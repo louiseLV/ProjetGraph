@@ -1,0 +1,69 @@
+Choix du tableau de contraintes à traiter :
+1-14
+Entrez le numéro du tableau de contraintes à traiter : 4
+* Création du graphe d'ordonnancement :
+Nombre de sommet : 13
+Nombre d'arc : 16
+0 -> 1 = 0
+0 -> 2 = 0
+1 -> 4 = 1
+2 -> 3 = 2
+3 -> 10 = 3
+4 -> 5 = 4
+4 -> 7 = 4
+4 -> 9 = 4
+5 -> 6 = 5
+5 -> 8 = 5
+6 -> 11 = 6
+7 -> 8 = 7
+8 -> 11 = 8
+9 -> 10 = 9
+10 -> 12 = 10
+11 -> 12 = 11
+Matrice des valeurs :
+        0       1       2       3       4       5       6       7       8       9       10      11      12
+0       *       0       0       *       *       *       *       *       *       *       *       *       *
+1       *       *       *       *       1       *       *       *       *       *       *       *       *
+2       *       *       *       2       *       *       *       *       *       *       *       *       *
+3       *       *       *       *       *       *       *       *       *       *       3       *       *
+4       *       *       *       *       *       4       *       4       *       4       *       *       *
+5       *       *       *       *       *       *       5       *       5       *       *       *       *
+6       *       *       *       *       *       *       *       *       *       *       *       6       *
+7       *       *       *       *       *       *       *       *       7       *       *       *       *
+8       *       *       *       *       *       *       *       *       *       *       *       8       *
+9       *       *       *       *       *       *       *       *       *       *       9       *       *
+10      *       *       *       *       *       *       *       *       *       *       *       *       10
+11      *       *       *       *       *       *       *       *       *       *       *       *       11
+12      *       *       *       *       *       *       *       *       *       *       *       *       *
+
+-> Il n'y a pas de circuit
+
+-> Il n'y a pas d'arcs négatifs
+
+-> c'est un graphe d'ordonnancement
+
+Rang du sommet 0 : 0
+Rang du sommet 1 : 1
+Rang du sommet 2 : 1
+Rang du sommet 3 : 2
+Rang du sommet 4 : 2
+Rang du sommet 5 : 3
+Rang du sommet 6 : 4
+Rang du sommet 7 : 3
+Rang du sommet 8 : 4
+Rang du sommet 9 : 3
+Rang du sommet 10 : 4
+Rang du sommet 11 : 5
+Rang du sommet 12 : 6
+
+Calendriers au plus tôt : [0, 0, 0, 2, 3, 8, 12, 8, 12, 8, 13, 16, 18]
+
+Calendriers au plus tard : [0, 0, 12, 14, 3, 8, 14, 10, 12, 12, 17, 16, 18]
+
+Marges : [0, 0, 12, 12, 0, 0, 2, 2, 0, 4, 4, 0, 0]
+
+Chemins critiques : [(0, 1), (0, 2), (1, 4), (4, 5), (4, 7), (4, 9), (5, 6), (5, 8), (8, 11), (11, 12)]
+
+Sommets des chemins critiques : [0, 1, 4, 5, 8, 11, 12]
+
+Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) 

@@ -1,0 +1,46 @@
+Choix du tableau de contraintes à traiter :
+1-14
+Entrez le numéro du tableau de contraintes à traiter : 13
+* Création du graphe d'ordonnancement :
+Nombre de sommet : 6
+Nombre d'arc : 7
+0 -> 1 = 0
+0 -> 3 = 0
+1 -> 2 = 1
+2 -> 5 = 2
+3 -> 2 = 3
+3 -> 4 = 3
+4 -> 5 = 4
+Matrice des valeurs :
+        0       1       2       3       4       5
+0       *       0       *       0       *       *
+1       *       *       1       *       *       *
+2       *       *       *       *       *       2
+3       *       *       3       *       3       *
+4       *       *       *       *       *       4
+5       *       *       *       *       *       *
+
+-> Il n'y a pas de circuit
+
+-> Il n'y a pas d'arcs négatifs
+
+-> c'est un graphe d'ordonnancement
+
+Rang du sommet 0 : 0
+Rang du sommet 1 : 1
+Rang du sommet 2 : 2
+Rang du sommet 3 : 1
+Rang du sommet 4 : 2
+Rang du sommet 5 : 3
+
+Calendriers au plus tôt : [0, 0, 9, 0, 4, 11]
+
+Calendriers au plus tard : [0, 0, 9, 0, 4, 11]
+
+Marges : [0, 0, 0, 0, 0, 0]
+
+Chemins critiques : [(0, 1), (0, 3), (1, 2), (2, 5), (3, 2), (3, 4), (4, 5)]
+
+Sommets des chemins critiques : [0, 1, 2, 3, 4, 5]
+
+Voulez-vous continuer avec un autre tableau de contraintes ? (oui/non) 
