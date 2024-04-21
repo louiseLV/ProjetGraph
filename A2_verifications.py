@@ -1,4 +1,3 @@
-from fichier import lire_contraintes, creation_graphe, afficher_graphe
 def detecter_circuit(graphe):
     
     # Création d'une copie du graphe

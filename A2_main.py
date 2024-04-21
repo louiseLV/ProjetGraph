@@ -1,5 +1,5 @@
-from fichier import lire_contraintes, afficher_graphe, creation_graphe, afficherGraphSousLaFormeDeTriplet
-from verifications import detecter_circuit, arcs_negatifs, calculer_rangs_graphe, calculer_calendriers, calculer_sommets_critiques, calculer_chemins_critiques
+from A2_fichier import lire_contraintes, afficher_graphe, creation_graphe, afficherGraphSousLaFormeDeTriplet
+from A2_verifications import detecter_circuit, arcs_negatifs, calculer_rangs_graphe, calculer_calendriers, calculer_sommets_critiques, calculer_chemins_critiques
 
 
 def main():
